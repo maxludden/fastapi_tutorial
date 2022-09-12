@@ -11,6 +11,8 @@ packages = [{include = "fastapi_tutorial"}]
 python = "^3.10"
 fastapi = "^0.83.0"
 uvicorn = "^0.18.3"
+Jinja2 = "^3.1.2"
+dotenv = "^0.0.5"
 
 
 [build-system]
