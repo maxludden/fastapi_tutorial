@@ -1,3 +1,5 @@
+import os
+import sys
 from typing import Any
 from typing import Generator
 
@@ -7,10 +9,8 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-import sys
-import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-#this is to include backend dir in sys.path so that we can import from db,main.py
+# this is to include backend dir in sys.path so that we can import from db,main.py
 
 from db.base import Base
 from db.session import get_db
@@ -39,11 +39,11 @@ def app() -> Generator[FastAPI, Any, None]:
     Base.metadata.create_all(engine)  # type: ignore
     _app = start_application()
     yield _app
-    Base.metadata.drop_all(engine) # type: ignore
+    Base.metadata.drop_all(engine)  # type: ignore
 
 
 @pytest.fixture(scope="function")
-def db_session(app: FastAPI) -> Generator[SessionTesting, Any, None]: # type: ignore #Type: ignore
+def db_session(app: FastAPI) -> Generator[SessionTesting, Any, None]:  # type: ignore #Type: ignore
     connection = engine.connect()
     transaction = connection.begin()
     session = SessionTesting(bind=connection)
