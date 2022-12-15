@@ -52,16 +52,18 @@ def test_read_all_jobs(client):
     assert response.json()[1]
 
 
-def test_delete_a_job(client):            #new
+def test_create_job(client,normal_user_token_headers):   #added normal_user_token_headers
     data = {
-        "title": "New Job super",
+        "title": "SDE super",
         "company": "doogle",
         "company_url": "www.doogle.com",
         "location": "USA,NY",
-        "description": "fastapi",
-        "date_posted": "2022-03-20"
-        }
-    client.post("/jobs/create-job/",json.dumps(data))
-    msg = client.delete("/jobs/delete/1")
-    response = client.get("/jobs/get/1/")
-    assert response.status_code == status.HTTP_404_NOT_FOUND
+        "description": "python",
+        "date_posted": "2022-03-20",
+    }
+    response = client.post("/jobs/create-job/",data=json.dumps(data),headers=normal_user_token_headers)  #added header in the post request
+    assert response.status_code == 200
+    assert response.json()["company"] == "doogle"
+    assert response.json()["description"] == "python"
+
+# We need to modify each and every unit test in which we are making a post/delete request. Since we are not restricting get requests. We do not need headers for get requests.

@@ -167,3 +167,4 @@ driver
 cspell.config.yaml
 
 *.txt
+.DS_Store

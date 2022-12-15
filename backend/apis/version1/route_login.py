@@ -9,10 +9,8 @@ from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
 from fastapi import status
-from fastapi.security import OAuth2PasswordBearer
-from fastapi.security import OAuth2PasswordRequestForm
-from jose import jwt
-from jose import JWTError
+from fastapi.security import OAuth2PasswordRequestForm,OAuth2PasswordBearer
+from jose import JWTError, jwt
 from schemas.tokens import Token
 from sqlalchemy.orm import Session
 
@@ -46,7 +44,7 @@ def login_for_access_token(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login/token")  #new
 
 #new function, It works as a dependency
 def get_current_user_from_token(token: str = Depends(oauth2_scheme),db: Session=Depends(get_db)):
